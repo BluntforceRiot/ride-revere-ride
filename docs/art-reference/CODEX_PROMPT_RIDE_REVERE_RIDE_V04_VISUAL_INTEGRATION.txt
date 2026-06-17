@@ -1,0 +1,151 @@
+You are working in the `ride-revere-ride` repo.
+
+Goal:
+Implement v0.4 Visual Integration Prototype for Ride, Revere, Ride.
+
+Context:
+The current v0.3 prototype is already playable with placeholder rectangles, a 90-second run, four lanes, score, combo multiplier, alarm meter, stamina, hazards, targets, game-over initials, local high scores, and GitHub Pages workflow. Do not rewrite the gameplay loop. This pass replaces the placeholder look with a coherent 16-bit Revolutionary War arcade visual prototype.
+
+Use the art package included with this prompt as the visual bible. The reference images are concept sheets and mockups, not all are final transparent sprites. Preserve all source reference images in the repo under `docs/art-reference/` or another non-runtime folder, then derive/crop/create first-pass runtime assets under `public/assets/`.
+
+Primary visual direction:
+- Lost 16-bit/SNES-style arcade cartridge.
+- Moonlit colonial road.
+- Parchment, wood, iron, lantern glow, muted midnight blues, warm amber windows, Crown red accents, Revolutionary blue accents.
+- Chunky readable pixels, not strict 8x8 NES minimalism.
+- Nearest-neighbor scaling everywhere.
+- Funny historical parody, but readable first.
+- No direct Paperboy references, names, or assets.
+
+Important game design state rules for target buildings:
+- Unwarned state: mostly dark, quiet, unaware. The porch/front lantern may be on, but windows should mostly be dark.
+- Warned/alert state: windows light up, posted broadsides/signs appear, lanterns brighten, citizens/patriots implied awake.
+- House: porch lantern on before warning; after warning, many/all windows lit and a warning broadside posted.
+- Tavern: dim/quiet before; after warning, warm/lively, windows bright, broadsides on wall/door.
+- Church: dim/quiet before; after warning, bell tower/windows lit and broadside posted.
+- Blacksmith: forge dim before; after warning, forge is much brighter, shop glows orange, signs/broadsides posted.
+- Militia Post: quiet before; after warning, lanterns bright, militia active. Sign should read: `LIBERTY OR DEATH MILITIA`.
+
+Historical/funny Easter egg:
+- Hemp farm scenery should be a working colonial hemp farm, not a modern weed gag.
+- Include one subtle hemp leaf stamp on a bale/crate only. No smoke jokes, no 420 jokes.
+
+Runtime asset folder target:
+public/assets/
+  player/
+  enemies/
+  hazards/
+  buildings/
+  props/
+  effects/
+  ui/
+  environment/
+  screens/
+
+Reference image folder target:
+docs/art-reference/
+  00_reference/
+  01_style_anchors/
+  02_characters/
+  02_characters_hazards/
+  03_buildings/
+  04_ui_screens/
+  05_props_effects/
+  05_environment/
+  99_misc/
+
+v0.4 integration order:
+1. Preserve art reference package in `docs/art-reference/`.
+2. Add Phaser asset preload logic for runtime PNG assets.
+3. Add CSS/canvas renderer settings for crisp nearest-neighbor pixels.
+4. Replace TitleScene placeholder text layout with a visual title/menu scene using art-inspired styling. A full-screen static title background is acceptable for v0.4 if cropped/created from the reference.
+5. Replace GameScene placeholder rectangles with first-pass sprites or cropped image assets:
+   - player: Paul Revere on horseback
+   - projectile: rolled broadside
+   - targets: house, tavern, church, blacksmith, militia post
+   - hazards: Redcoat Tea Table, Royal Tax Collector, Loyalist, barrel, mud patch
+   - scenery/props: lantern post, fence, hemp bale/crate, moonlit road/parallax
+6. Keep hitboxes simple and fair. Use existing gameplay hitboxes if needed; sprites may be decorative around those hitboxes.
+7. Add warned/alert building visual state. It is okay if v0.4 uses two textures per building: `*_unwarned.png` and `*_warned.png`.
+8. Add UI skinning:
+   - score panel
+   - combo panel
+   - alarm meter
+   - stamina meter
+   - broadside count/distance if easy
+   - keep text readable and do not overcrowd.
+9. Add simple effects:
+   - floating score text remains
+   - broadside hit spark if easy
+   - lantern glow if easy
+   - invulnerability flash remains
+10. Update GameOver/HighScoreScene with parchment/wood UI styling or a static background if faster.
+11. Update README with v0.4 visual prototype notes and asset attribution.
+12. Run typecheck and build.
+13. Commit changes.
+14. Create a review packet.
+
+Cropping/deriving assets:
+- Use Python/Pillow, ImageMagick, or another local script if useful.
+- Do not spend forever on perfect extraction. v0.4 is a visual prototype.
+- Prefer transparent PNGs, but if extraction is too slow, use rectangular crops with dark backgrounds temporarily. Document that as a known limitation.
+- Keep generated/cropped runtime assets in `public/assets/`.
+- Keep original reference sheets untouched in `docs/art-reference/`.
+- Do not overwrite or destroy source art.
+- Do not commit enormous unnecessary duplicates beyond the included art references and runtime assets.
+
+Specific source mapping:
+- Player: `docs/art-reference/02_characters/player_paul_revere_horse_showcase.png` and `docs/art-reference/05_props_effects/player_master_sheet_reference.png`
+- Royal Tax Collector: `docs/art-reference/02_characters/enemy_royal_tax_collector_character_sheet.png`
+- Loyalist: `docs/art-reference/02_characters/enemy_loyalist_character_sheet.png`
+- Redcoat Tea Table: `docs/art-reference/02_characters_hazards/hazard_redcoat_tea_table_sheet.png`
+- Buildings: `docs/art-reference/03_buildings/target_buildings_master_sheet.png` plus the specific building files
+- UI: `docs/art-reference/04_ui_screens/hud_ui_master_sheet.png`, `full_game_ui_asset_sheet_01.png`, `full_game_ui_asset_sheet_02.png`
+- Environment: `docs/art-reference/05_environment/environment_parallax_master_sheet.png`
+- Props/effects: `docs/art-reference/05_props_effects/props_hazards_concept_sheet_01.png`, `ui_props_hazards_design_poster.png`
+
+Do not add:
+- Online leaderboard
+- Backend
+- Multiplayer
+- Level editor
+- Full animation system rewrite
+- New game mechanics unless required by visual state
+- Any copyrighted Paperboy assets/names/references
+
+Acceptance criteria:
+- `npm run typecheck` passes.
+- `npm run build` passes.
+- Title screen looks like Ride, Revere, Ride rather than rectangles.
+- GameScene uses themed art/sprites for player, targets, major hazards, and UI.
+- Target buildings visibly change from unwarned to warned/alert state.
+- Hemp bale/crate Easter egg appears somewhere as scenery/prop.
+- Gameplay remains functionally equivalent to v0.3.
+- Local high scores still work.
+- GitHub Pages workflow remains intact.
+- README documents v0.4 visual prototype and known limitations.
+
+Create review packet:
+- `BUILD_RECEIPT_RIDE_REVERE_RIDE_V04.md`
+- `BUILD_LOG_RIDE_REVERE_RIDE_V04.txt`
+- `ride-revere-ride-v04-review.zip`
+
+Receipt must include:
+- branch and latest commit hash
+- typecheck result
+- build result
+- changed files summary
+- exact runtime assets created
+- reference images copied
+- known visual limitations
+- recommended next changes
+- screenshots if you can capture them
+
+Zip must exclude:
+- node_modules
+- dist
+- .git
+- .vite
+- coverage
+- old review zips
+- caches

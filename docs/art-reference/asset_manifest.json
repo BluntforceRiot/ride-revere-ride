@@ -1,0 +1,206 @@
+[
+  {
+    "source_file": "image.png",
+    "package_path": "00_reference/theme1_8bit_america_reference.png",
+    "dimensions": "1122x1402",
+    "notes": "Contest example/reference image supplied by user. Use as broad tone reference only, not as a source asset."
+  },
+  {
+    "source_file": "colonial_messenger_on_horseback_at_night.png",
+    "package_path": "01_style_anchors/colonial_messenger_on_horseback_at_night.png",
+    "dimensions": "1448x1086",
+    "notes": "Gameplay-style anchor: moonlit road, Revere, HUD, targets, enemies."
+  },
+  {
+    "source_file": "ride_revere_ride_wake_the_town.png",
+    "package_path": "01_style_anchors/ride_revere_ride_wake_the_town.png",
+    "dimensions": "1448x1086",
+    "notes": "Title/poster anchor with strong logo, menu feel, and central horse/rider."
+  },
+  {
+    "source_file": "midnight_ride_for_liberty.png",
+    "package_path": "01_style_anchors/midnight_ride_for_liberty.png",
+    "dimensions": "1448x1086",
+    "notes": "In-game chase/action anchor with HUD and roadside target state."
+  },
+  {
+    "source_file": "revolutionary_ride_pixel_art_concept.png",
+    "package_path": "01_style_anchors/revolutionary_ride_pixel_art_concept.png",
+    "dimensions": "1448x1086",
+    "notes": "Concept board with characters/buildings/UI tone."
+  },
+  {
+    "source_file": "ride_revere_ride.png",
+    "package_path": "01_style_anchors/title_screen_visual_anchor.png",
+    "dimensions": "1254x1254",
+    "notes": "Title-screen visual prototype reference."
+  },
+  {
+    "source_file": "ride_revere_ride_pixel_chase.png",
+    "package_path": "01_style_anchors/gameplay_visual_anchor.png",
+    "dimensions": "1254x1254",
+    "notes": "Gameplay mockup/reference for v0.4 visual target."
+  },
+  {
+    "source_file": "paul_revere_pixel_art_showcase.png",
+    "package_path": "02_characters/player_paul_revere_horse_showcase.png",
+    "dimensions": "1254x1254",
+    "notes": "Primary source for player horse/rider sprite and throw pose."
+  },
+  {
+    "source_file": "royal_tax_collector_character_sheet.png",
+    "package_path": "02_characters/enemy_royal_tax_collector_character_sheet.png",
+    "dimensions": "1254x1254",
+    "notes": "Primary source for Royal Tax Collector enemy/hazard."
+  },
+  {
+    "source_file": "loyalist_soldier_character_sprite_sheet.png",
+    "package_path": "02_characters/enemy_loyalist_character_sheet.png",
+    "dimensions": "1254x1254",
+    "notes": "Primary source for Loyalist/redcoat pursuer."
+  },
+  {
+    "source_file": "tea_table_redcoat_obstacle_sprite_sheet.png",
+    "package_path": "02_characters_hazards/hazard_redcoat_tea_table_sheet.png",
+    "dimensions": "1254x1254",
+    "notes": "Primary source for Redcoat Tea Table road-block obstacle."
+  },
+  {
+    "source_file": "enemy_and_hazard_master_sheet.png",
+    "package_path": "02_characters_hazards/enemy_and_hazard_master_sheet.png",
+    "dimensions": "1448x1086",
+    "notes": "Master sheet for enemy/hazard states and icons."
+  },
+  {
+    "source_file": "ride_revere_ride_concept_sheet.png",
+    "package_path": "03_buildings/building_house_first_concept_sheet.png",
+    "dimensions": "1254x1254",
+    "notes": "Original building concept sheet, useful for house style."
+  },
+  {
+    "source_file": "ride_revere_ride_concept_art.png",
+    "package_path": "03_buildings/building_house_alert_state_reference.png",
+    "dimensions": "1254x1254",
+    "notes": "House/tavern/church/blacksmith/militia style reference."
+  },
+  {
+    "source_file": "tavern_concept_sheet_green_dragon.png",
+    "package_path": "03_buildings/building_tavern_green_dragon_states.png",
+    "dimensions": "1254x1254",
+    "notes": "Primary source for tavern normal/alert states."
+  },
+  {
+    "source_file": "patriotic_tavern_concept_art.png",
+    "package_path": "03_buildings/building_tavern_dim_vs_alert_reference.png",
+    "dimensions": "1254x1254",
+    "notes": "Refined tavern alert states: dim before, windows/signs after."
+  },
+  {
+    "source_file": "target_building_concept_church_variants.png",
+    "package_path": "03_buildings/building_church_variants.png",
+    "dimensions": "1254x1254",
+    "notes": "Church variants/source reference."
+  },
+  {
+    "source_file": "target_building_concept_church_states.png",
+    "package_path": "03_buildings/building_church_dim_vs_alert_states.png",
+    "dimensions": "1254x1254",
+    "notes": "Primary source for church normal/alert states."
+  },
+  {
+    "source_file": "ye_olde_blacksmith_ui_concept.png",
+    "package_path": "03_buildings/building_blacksmith_first_concept.png",
+    "dimensions": "1254x1254",
+    "notes": "Blacksmith first concept/state source."
+  },
+  {
+    "source_file": "target_buildings_master_sheet_concept_art.png",
+    "package_path": "03_buildings/target_buildings_master_sheet.png",
+    "dimensions": "1448x1086",
+    "notes": "Master sheet with all target states and broadside examples."
+  },
+  {
+    "source_file": "militia_post_warned_and_unalerted_states.png",
+    "package_path": "03_buildings/building_militia_post_liberty_or_death_states.png",
+    "dimensions": "1254x1254",
+    "notes": "Refined militia post with Liberty or Death Militia sign."
+  },
+  {
+    "source_file": "pixel_art_militia_post_showcase.png",
+    "package_path": "03_buildings/building_militia_post_showcase.png",
+    "dimensions": "1254x1254",
+    "notes": "Early militia post concept."
+  },
+  {
+    "source_file": "a_full_game_ui_asset_sheet_illustration_in_retro_p.png",
+    "package_path": "04_ui_screens/full_game_ui_asset_sheet_01.png",
+    "dimensions": "1536x1024",
+    "notes": "UI/asset reference sheet with panels, props, buttons, high score."
+  },
+  {
+    "source_file": "a_high_detail_game_ui_asset_sheet_image_in_pixel_a.png",
+    "package_path": "04_ui_screens/full_game_ui_asset_sheet_02.png",
+    "dimensions": "1536x1024",
+    "notes": "UI/asset reference sheet with HUD, how-to, screens, tiles."
+  },
+  {
+    "source_file": "retro_game_ui_concept_sheet.png",
+    "package_path": "04_ui_screens/hud_ui_master_sheet.png",
+    "dimensions": "1448x1086",
+    "notes": "HUD and UI master sheet reference."
+  },
+  {
+    "source_file": "ride_revere_ride_game_over_screen.png",
+    "package_path": "04_ui_screens/game_over_high_score_screen_reference.png",
+    "dimensions": "1254x1254",
+    "notes": "Game over/high score screen visual reference."
+  },
+  {
+    "source_file": "pixel_art_game_screens_mockup_revere_s_ride.png",
+    "package_path": "04_ui_screens/screens_and_flows_master_sheet.png",
+    "dimensions": "1448x1086",
+    "notes": "Screens/flows master sheet."
+  },
+  {
+    "source_file": "patriotic_pixel_art_game_asset_reference.png",
+    "package_path": "04_ui_screens/patriotic_pixel_art_game_asset_reference.png",
+    "dimensions": "1448x1086",
+    "notes": "General UI/asset reference poster."
+  },
+  {
+    "source_file": "patriotic_8_bit_concept_sheet.png",
+    "package_path": "05_props_effects/props_hazards_concept_sheet_01.png",
+    "dimensions": "1254x1254",
+    "notes": "Props/hazards concept sheet."
+  },
+  {
+    "source_file": "roadside_environment_concept_sheet.png",
+    "package_path": "05_props_effects/roadside_environment_concept_sheet.png",
+    "dimensions": "1254x1254",
+    "notes": "Roadside environment concepts including hemp farm corner."
+  },
+  {
+    "source_file": "pixel_art_colonial_environment_master_sheet.png",
+    "package_path": "05_environment/environment_parallax_master_sheet.png",
+    "dimensions": "1448x1086",
+    "notes": "Environment/parallax master sheet."
+  },
+  {
+    "source_file": "ride_revere_ride_game_concept_sheet.png",
+    "package_path": "05_props_effects/player_master_sheet_reference.png",
+    "dimensions": "1448x1086",
+    "notes": "Player master sheet and projectile/icons."
+  },
+  {
+    "source_file": "ride_revere_ride_game_design_poster.png",
+    "package_path": "05_props_effects/ui_props_hazards_design_poster.png",
+    "dimensions": "1254x1254",
+    "notes": "Props/hazards/UI poster."
+  },
+  {
+    "source_file": "imagegen.png",
+    "package_path": "99_misc/latest_imagegen_duplicate_or_unclassified.png",
+    "dimensions": "1448x1086",
+    "notes": "Generic latest imagegen export; included in case it differs from named files."
+  }
+]

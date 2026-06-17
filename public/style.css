@@ -1,0 +1,30 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    color: #f6f1df;
+    background-color: #101624;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+#app {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-container {
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    display: block;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
