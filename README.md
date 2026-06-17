@@ -9,7 +9,7 @@ Ride through a moonlit colonial route, throw broadsides, dodge loyalist hazards,
 This is a static browser game. Once GitHub Pages is enabled and the deploy workflow has run, players can play directly in the browser at the repository's GitHub Pages demo URL, typically:
 
 ```text
-https://<github-user-or-org>.github.io/ride-revere-ride/
+https://bluntforceriot.github.io/ride-revere-ride/
 ```
 
 No download, backend, account, or online leaderboard is required for normal play.
