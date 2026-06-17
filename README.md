@@ -2,11 +2,11 @@
 
 Ride through a moonlit colonial route, throw broadsides, dodge loyalist hazards, and wake the town before dawn.
 
-`v0.9.2` is a one-level retro arcade score-attack polish prototype built with Phaser, Vite, and TypeScript. Paul Revere stays fixed near the left side of the road while targets, hazards, and scenery scroll in from the right.
+`v0.9.3` is a one-level retro arcade score-attack polish prototype built with Phaser, Vite, and TypeScript. Paul Revere stays fixed near the left side of the road while targets, hazards, and scenery scroll in from the right.
 
 ## Browser Demo
 
-This is a static browser game. Once GitHub Pages is enabled and the deploy workflow has run, players can play directly in the browser at the repository's GitHub Pages demo URL, typically:
+This is a static browser game. Players can play directly in the browser at:
 
 ```text
 https://bluntforceriot.github.io/ride-revere-ride/
@@ -71,7 +71,7 @@ High scores are local browser storage only. No backend or online leaderboard is 
 
 Audio is generated in code with WebAudio oscillators. No copyrighted audio files are included. Press `M` to mute or unmute; the mute preference is saved locally.
 
-## v0.9.2 Scope
+## v0.9.3 Scope
 
 - Four scenes: `TitleScene`, `GameScene`, `GameOverScene`, and `HighScoreScene`
 - Fixed 960x540 canvas target
@@ -82,9 +82,9 @@ Audio is generated in code with WebAudio oscillators. No copyrighted audio files
 - Scripted runtime asset cleanup for transparency, padding, and active-sprite brightness
 - Cleaner moonlit dirt road with quiet lane bands, compact grounding shadows, and reduced visual noise
 - Public-facing target/hazard markers and oversized halos removed; debug labels/hitboxes stay behind F3
-- Target buildings use attached window glow, warm sprite tint, and a small posted notice instead of a large target box
+- Target buildings use solid sprites, warm tint, and compact window light cues instead of target boxes
 - Broadside projectile uses a tight transparent rolled-paper sprite with no rectangular backing
-- Lightweight motion: Revere bob/lean/dust, broadside flutter, target/hazard idle pulses, and delivery pop effects
+- Lightweight motion: Revere bob/lean/dust, broadside flutter, target/hazard idle motion, and delivery pop effects
 - Generated WebAudio cues for throws, deliveries, hazards, combo tiers, game over, and score save
 - Public-demo debug visuals default off, with F3 toggle for development
 

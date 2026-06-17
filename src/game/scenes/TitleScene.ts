@@ -60,7 +60,7 @@ export class TitleScene extends Scene {
             strokeThickness: 3
         }).setOrigin(1, 0.5);
 
-        this.add.text(GAME.width / 2, 500, 'v0.9.2 browser demo prototype', {
+        this.add.text(GAME.width / 2, 500, 'v0.9.3 browser demo prototype', {
             ...textStyle,
             fontSize: '14px',
             color: '#839bb1',

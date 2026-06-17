@@ -31,6 +31,8 @@ interface RouteEntity {
     age: number;
     width: number;
     height: number;
+    visualWidth: number;
+    visualHeight: number;
     warned: boolean;
     container: Phaser.GameObjects.Container;
     body: Phaser.GameObjects.Rectangle;
@@ -45,10 +47,14 @@ interface Broadside {
     age: number;
     width: number;
     height: number;
+    visualWidth: number;
+    visualHeight: number;
     hit: boolean;
     trail: Phaser.GameObjects.Rectangle;
     container: Phaser.GameObjects.Container;
 }
+
+const ROUTE_ENTITY_EDGE_MARGIN = 24;
 
 const hudStyle: Phaser.Types.GameObjects.Text.TextStyle = {
     fontFamily: 'Courier New, monospace',
@@ -222,16 +228,16 @@ export class GameScene extends Scene {
         for (let x = 24; x < GAME.width + 180; x += 190) {
             this.roadDecor.push(this.add.image(x, GAME.road.top - 24, ASSETS.props.fence)
                 .setDisplaySize(104, 44)
-                .setAlpha(0.82));
+                .setAlpha(1));
             this.roadDecor.push(this.add.image(x + 82, GAME.road.bottom + 28, ASSETS.props.fence)
                 .setDisplaySize(104, 44)
-                .setAlpha(0.76));
+                .setAlpha(1));
         }
 
         for (let x = 120; x < GAME.width + 360; x += 330) {
             this.roadDecor.push(this.add.image(x, GAME.road.top - 46, ASSETS.props.lanternPosts)
                 .setDisplaySize(92, 56)
-                .setAlpha(0.9));
+                .setAlpha(1));
         }
 
         this.roadDecor.push(this.add.image(GAME.width + 220, GAME.road.bottom + 38, ASSETS.props.hempBaleCrate)
@@ -354,16 +360,17 @@ export class GameScene extends Scene {
         if (this.invulnerabilityMs <= 0) {
             this.playerBody.setAlpha(this.getDebugHitboxAlpha());
             this.playerSprite.setAlpha(1);
+            this.playerSprite.clearTint();
             return;
         }
 
         const elapsed = GAME.player.invulnerabilityMs - this.invulnerabilityMs;
         const flashPhase = Math.floor(elapsed / GAME.player.flashMs);
+        const tint = flashPhase % 2 === 0 ? 0xffc68c : 0xffffff;
 
-        const alpha = flashPhase % 2 === 0 ? 0.42 : 1;
-
-        this.playerBody.setAlpha(this.debugVisuals ? alpha : 0);
-        this.playerSprite.setAlpha(alpha);
+        this.playerBody.setAlpha(this.getDebugHitboxAlpha());
+        this.playerSprite.setAlpha(1);
+        this.playerSprite.setTint(tint);
     }
 
     private updateScrollingDecor(seconds: number, routeSpeed: number) {
@@ -401,7 +408,7 @@ export class GameScene extends Scene {
             entity.container.x = entity.x;
             this.updateEntityMotion(entity);
 
-            if (entity.x < -entity.width) {
+            if (this.isEntityFullyOffscreenLeft(entity)) {
                 this.handleEscapedEntity(entity);
                 this.removeEntity(entity);
             }
@@ -417,7 +424,7 @@ export class GameScene extends Scene {
             broadside.container.setAngle(Math.sin(broadside.age * 18) * 3);
             broadside.trail.setAlpha(0.16 + Math.sin(broadside.age * 18) * 0.04);
 
-            if (broadside.x > GAME.width + 60) {
+            if (broadside.x > GAME.width + broadside.visualWidth / 2 + ROUTE_ENTITY_EDGE_MARGIN) {
                 this.removeBroadside(broadside);
             }
         }
@@ -436,7 +443,7 @@ export class GameScene extends Scene {
 
         if (!entity.warned && entity.sprite) {
             entity.sprite.y = -12 + Math.sin(phase) * 0.45;
-            entity.sprite.setAlpha(0.97 + Math.sin(phase * 0.72) * 0.03);
+            entity.sprite.setAlpha(1);
         }
     }
 
@@ -504,28 +511,26 @@ export class GameScene extends Scene {
     }
 
     private spawnWave(waveType: WaveType) {
-        const spawnX = GAME.spawnDirector.spawnX;
-
         if (waveType === 'singleTarget') {
-            this.spawnTarget(this.pickLanes(1)[0], spawnX);
+            this.spawnTarget(this.pickLanes(1)[0]);
             return;
         }
 
         if (waveType === 'twoTargets') {
             for (const laneIndex of this.pickLanes(2)) {
-                this.spawnTarget(laneIndex, spawnX);
+                this.spawnTarget(laneIndex);
             }
             return;
         }
 
         if (waveType === 'oneHazard') {
-            this.spawnHazard(this.pickLanes(1)[0], spawnX);
+            this.spawnHazard(this.pickLanes(1)[0]);
             return;
         }
 
         if (waveType === 'twoHazards') {
             for (const laneIndex of this.pickLanes(2)) {
-                this.spawnHazard(laneIndex, spawnX);
+                this.spawnHazard(laneIndex);
             }
             return;
         }
@@ -533,8 +538,8 @@ export class GameScene extends Scene {
         if (waveType === 'targetHazard') {
             const lanes = this.pickLanes(2);
 
-            this.spawnTarget(lanes[0], spawnX);
-            this.spawnHazard(lanes[1], spawnX);
+            this.spawnTarget(lanes[0]);
+            this.spawnHazard(lanes[1]);
             return;
         }
 
@@ -543,38 +548,34 @@ export class GameScene extends Scene {
         const targetLane = safeLanes[0];
 
         for (const laneIndex of hazardLanes) {
-            this.spawnHazard(laneIndex, spawnX);
+            this.spawnHazard(laneIndex);
         }
 
-        this.spawnTarget(targetLane, spawnX);
+        this.spawnTarget(targetLane);
     }
 
-    private spawnTarget(laneIndex: number, x: number) {
+    private spawnTarget(laneIndex: number) {
         const name = this.pickRandom(TARGET_NAMES);
         const style = TARGET_STYLES[name];
         const asset = ASSETS.buildings[name];
         const displaySize = this.getTargetDisplaySize(name);
+        const x = this.getSpawnXForDisplayWidth(displaySize.width);
         const y = GAME.lanes[laneIndex];
         const tagWidth = Math.max(48, style.tag.length * 8 + 12);
         const shadow = this.add.ellipse(0, 23, displaySize.width * 0.52, 14, 0x050302, 0.36);
+        const leftGlow = this.add.circle(-displaySize.width * 0.22, -12, 8, 0xffc863, 0.07);
+        const rightGlow = this.add.circle(displaySize.width * 0.12, -12, 7, 0xffc863, 0.06);
+        const doorGlow = this.add.circle(displaySize.width * 0.28, 2, 7, 0xffd47a, 0.06);
         const sprite = this.add.image(0, -12, asset.unwarned)
             .setDisplaySize(displaySize.width, displaySize.height)
             .setAlpha(1)
             .setTint(0xffedc4);
-        const leftGlow = this.add.circle(-displaySize.width * 0.22, -12, 13, 0xffc863, 0.16);
-        const rightGlow = this.add.circle(displaySize.width * 0.12, -12, 12, 0xffc863, 0.14);
-        const doorGlow = this.add.circle(displaySize.width * 0.28, 2, 10, 0xffd47a, 0.12);
-        const leftWindow = this.add.rectangle(-displaySize.width * 0.22, -12, 12, 15, 0xffc863, 0.78)
-            .setStrokeStyle(1, 0x3b210e, 0.68);
-        const rightWindow = this.add.rectangle(displaySize.width * 0.12, -12, 11, 14, 0xffb84e, 0.7)
-            .setStrokeStyle(1, 0x3b210e, 0.62);
-        const notice = this.add.rectangle(displaySize.width * 0.28, 0, 16, 19, 0xf1dfb4, 0.92)
-            .setStrokeStyle(1, 0x6c3b17, 0.82)
-            .setAngle(-4);
-        const noticeLineTop = this.add.rectangle(displaySize.width * 0.28, -3, 9, 2, 0x6c3b17, 0.58)
-            .setAngle(-4);
-        const noticeLineBottom = this.add.rectangle(displaySize.width * 0.28, 3, 7, 2, 0x6c3b17, 0.5)
-            .setAngle(-4);
+        const leftWindow = this.add.circle(-displaySize.width * 0.22, -12, 2.6, 0xffd889, 0.92)
+            .setStrokeStyle(1, 0x2d180b, 0.68);
+        const rightWindow = this.add.circle(displaySize.width * 0.12, -12, 2.4, 0xffc96d, 0.86)
+            .setStrokeStyle(1, 0x2d180b, 0.62);
+        const doorLight = this.add.circle(displaySize.width * 0.28, 1, 2.5, 0xffd889, 0.78)
+            .setStrokeStyle(1, 0x2d180b, 0.55);
         const body = this.add.rectangle(0, 0, GAME.target.width, GAME.target.height, style.fill, this.getDebugHitboxAlpha())
             .setStrokeStyle(1, style.stroke, this.getDebugStrokeAlpha());
         const tag = this.add.rectangle(
@@ -599,15 +600,13 @@ export class GameScene extends Scene {
 
         const container = this.add.container(x, y, [
             shadow,
-            sprite,
             leftGlow,
             rightGlow,
             doorGlow,
+            sprite,
             leftWindow,
             rightWindow,
-            notice,
-            noticeLineTop,
-            noticeLineBottom,
+            doorLight,
             body,
             tag,
             tagLabel,
@@ -623,6 +622,8 @@ export class GameScene extends Scene {
             age: 0,
             width: GAME.target.width,
             height: GAME.target.height,
+            visualWidth: displaySize.width,
+            visualHeight: displaySize.height,
             warned: false,
             container,
             body,
@@ -632,10 +633,11 @@ export class GameScene extends Scene {
         });
     }
 
-    private spawnHazard(laneIndex: number, x: number) {
+    private spawnHazard(laneIndex: number) {
         const name = this.pickRandom(HAZARD_NAMES);
         const style = HAZARD_STYLES[name];
         const displaySize = this.getHazardDisplaySize(name);
+        const x = this.getSpawnXForDisplayWidth(displaySize.width);
         const y = GAME.lanes[laneIndex];
         const tagWidth = Math.max(48, style.tag.length * 8 + 12);
         const shadow = this.add.ellipse(0, 20, displaySize.width * 0.56, 15, 0x050302, 0.44);
@@ -683,6 +685,8 @@ export class GameScene extends Scene {
             age: 0,
             width: GAME.hazard.width,
             height: GAME.hazard.height,
+            visualWidth: displaySize.width,
+            visualHeight: displaySize.height,
             warned: false,
             container,
             body,
@@ -716,6 +720,21 @@ export class GameScene extends Scene {
         return sizes[name];
     }
 
+    private getSpawnXForDisplayWidth(displayWidth: number) {
+        return GAME.width + displayWidth / 2 + ROUTE_ENTITY_EDGE_MARGIN;
+    }
+
+    private getSmallestRouteEntityDisplayWidth() {
+        const targetWidths = TARGET_NAMES.map((name) => this.getTargetDisplaySize(name).width);
+        const hazardWidths = HAZARD_NAMES.map((name) => this.getHazardDisplaySize(name).width);
+
+        return Math.min(...targetWidths, ...hazardWidths);
+    }
+
+    private isEntityFullyOffscreenLeft(entity: RouteEntity) {
+        return entity.x < -(entity.visualWidth / 2 + ROUTE_ENTITY_EDGE_MARGIN);
+    }
+
     private throwBroadside() {
         if (this.cooldownRemainingMs > 0) {
             return;
@@ -726,10 +745,12 @@ export class GameScene extends Scene {
 
         const x = GAME.player.x + GAME.player.width / 2 + 32;
         const y = this.player.y;
+        const displayWidth = 62;
+        const displayHeight = 24;
         const shadow = this.add.ellipse(2, 8, 58, 12, 0x050302, 0.34);
         const trail = this.add.rectangle(-28, 2, 34, 3, 0xffefb5, 0.16);
         const body = this.add.image(0, 0, ASSETS.props.broadside)
-            .setDisplaySize(62, 24)
+            .setDisplaySize(displayWidth, displayHeight)
             .setAlpha(1);
         const label = this.add.text(0, 0, 'Notice', {
             ...labelStyle,
@@ -743,6 +764,8 @@ export class GameScene extends Scene {
             age: 0,
             width: GAME.projectile.width,
             height: GAME.projectile.height,
+            visualWidth: displayWidth,
+            visualHeight: displayHeight,
             hit: false,
             trail,
             container
@@ -1030,8 +1053,10 @@ export class GameScene extends Scene {
     }
 
     private canSpawnColumn() {
+        const spawnX = this.getSpawnXForDisplayWidth(this.getSmallestRouteEntityDisplayWidth());
+
         return this.entities.every((entity) => {
-            return Math.abs(entity.x - GAME.spawnDirector.spawnX) > GAME.spawnDirector.minimumColumnGap;
+            return Math.abs(entity.x - spawnX) > GAME.spawnDirector.minimumColumnGap;
         });
     }
 
